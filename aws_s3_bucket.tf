@@ -1,5 +1,10 @@
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = local.bucket_name
+  bucket        = local.bucket_name
+  force_destroy = local.s3_force_destroy
+
+  lifecycle {
+    prevent_destroy = local.prevent_s3_bucket_destroy
+  }
 
   tags = {
     Name        = "Terraform State Bucket"

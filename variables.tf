@@ -9,6 +9,7 @@ variable "s3_expiration_days" { default = 90 }
 variable "block_public_access" { default = true }
 variable "versioning_enabled" { default = true }
 variable "server_side_encryption" { default = true }
+variable "prevent_s3_bucket_destroy" { default = false }
 variable "s3_force_destroy" { default = false }
 
 variable "enable_dynamodb_locking" { default = true }
