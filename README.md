@@ -13,6 +13,14 @@ This configuration provisions:
 - A DynamoDB table for state locking (optional)
 - Point-in-time recovery for DynamoDB (optional)
 
+### S3 State Bucket
+
+![Terraform State S3 Bucket](img/terraform_state_s3.png)
+
+### DynamoDB Lock Table
+
+![Terraform State DynamoDB Lock Table](img/terraform_state_dynamo_db_lock.png)
+
 ## Prerequisites
 
 - AWS CLI configured with appropriate credentials
