@@ -1,0 +1,17 @@
+variable "aws_region" { default = null }
+variable "project_name" { default = null }
+variable "environment" { default = null }
+variable "namespace" { default = null }
+variable "short_name" { default = null }
+
+variable "s3_bucket_name" { default = null }
+variable "s3_expiration_days" { default = 90 }
+variable "block_public_access" { default = true }
+variable "versioning_enabled" { default = true }
+variable "server_side_encryption" { default = true }
+variable "s3_force_destroy" { default = false }
+
+variable "enable_dynamodb_locking" { default = true }
+variable "dynamodb_table_name" { default = null }
+variable "enable_dynamodb_pitr" { default = true }
+variable "dynamodb_billing_mode" { default = "PAY_PER_REQUEST" }
