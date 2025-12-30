@@ -10,6 +10,7 @@ This configuration provisions:
 - S3 bucket encryption for security
 - Public access blocking on the S3 bucket
 - Lifecycle rules for object expiration
+- Lifecycle prevent_destroy protection (optional)
 - A DynamoDB table for state locking (optional)
 - Point-in-time recovery for DynamoDB (optional)
 
@@ -42,14 +43,15 @@ terraform apply
 Create a `terraform.tfvars` file to customize the deployment:
 
 ```hcl
-project_name            = "my-project"
-environment             = "production"
-short_name              = "myproj"
-s3_bucket_name          = "custom-bucket-name"
-dynamodb_table_name     = "custom-table-name"
-enable_dynamodb_locking = true
-versioning_enabled      = true
-server_side_encryption  = true
+project_name                = "my-project"
+environment                 = "production"
+short_name                  = "myproj"
+s3_bucket_name              = "custom-bucket-name"
+dynamodb_table_name         = "custom-table-name"
+enable_dynamodb_locking     = true
+versioning_enabled          = true
+server_side_encryption      = true
+prevent_s3_bucket_destroy   = true
 ```
 
 ## Variables
@@ -64,6 +66,7 @@ server_side_encryption  = true
 | `block_public_access` | Block public access to S3 bucket | true | No |
 | `versioning_enabled` | Enable S3 bucket versioning | true | No |
 | `server_side_encryption` | Enable S3 encryption | true | No |
+| `prevent_s3_bucket_destroy` | Prevent accidental bucket deletion | false | No |
 | `s3_force_destroy` | Allow bucket deletion with objects | false | No |
 | `enable_dynamodb_locking` | Enable DynamoDB state locking | true | No |
 | `dynamodb_table_name` | Custom DynamoDB table name | Auto-generated | No |
@@ -108,6 +111,7 @@ You can retrieve these values from the outputs after applying this configuration
 - S3 bucket encryption enabled by default
 - Public access blocked on S3 bucket
 - Versioning enabled for state file recovery
+- Lifecycle prevent_destroy protection available
 - DynamoDB point-in-time recovery enabled
 - All resources tagged with metadata
 
@@ -128,7 +132,10 @@ To destroy all resources:
 terraform destroy
 ```
 
-Note: If `s3_force_destroy` is set to `false` (default), you must manually empty the S3 bucket before destroying.
+**Important Notes:**
+- If `s3_force_destroy` is set to `false` (default), you must manually empty the S3 bucket before destroying
+- If `prevent_s3_bucket_destroy` is set to `true`, you must first set it to `false` and re-apply before you can destroy the bucket
+- For buckets with versioning enabled, you need to delete all object versions and delete markers before destruction
 
 ## License
 
