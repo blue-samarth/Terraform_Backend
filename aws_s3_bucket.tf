@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "terraform_state" {
   force_destroy = local.s3_force_destroy
 
   lifecycle {
-    prevent_destroy = local.prevent_s3_bucket_destroy
+    prevent_destroy = false
   }
 
   tags = {
